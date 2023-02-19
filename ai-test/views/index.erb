@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DNS Lookup Tool</title>
+    <!-- Load Bootstrap CSS from a CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>DNS Lookup Tool</h1>
+      <hr>
+      <form>
+        <div class="form-group">
+          <label for="host">Host:</label>
+          <input type="text" class="form-control" id="host" placeholder="Enter host name">
+        </div>
+        <div class="form-group">
+          <label for="type">Type:</label>
+          <select class="form-control" id="type">
+            <option value="A">A</option>
+            <option value="AAAA">AAAA</option>
+            <option value="CNAME">CNAME</option>
+            <option value="MX">MX</option>
+            <option value="NS">NS</option>
+            <option value="TXT">TXT</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" id="lookupBtn">Lookup</button>
+      </form>
+      <hr>
+      <div id="result">
+        <!-- Results will be inserted here -->
+      </div>
+    </div>
+
+    <!-- Load jQuery and Bootstrap JS from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#lookupBtn').click(function() {
+          var host = $('#host').val();
+          var type = $('#type').val();
+          $.ajax({
+            url: '/lookup',
+            type: 'POST',
+            dataType: 'json',
+            data: {host: host, type: type},
+            success: function(result) {
+              if (result.status === 'success') {
+                var html = '';
+                for (var i = 0; i < result.result.length; i++) {
+                  html += '<p>' + result.result[i] + '</p>';
+                }
+                $('#result').html(html);
+              } else {
+                $('#result').html('<p class="text-danger">' + result.message + '</p>');
+              }
+            },
+            error: function(xhr, status, error) {
+              $('#result').html('<p class="text-danger">' + error + '</p>');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
