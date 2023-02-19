@@ -2,36 +2,50 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>DNS Lookup Tool</title>
+    <title>B2 DNS Lookup Tool</title>
     <!-- Load Bootstrap CSS from a CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <h1>DNS Lookup Tool</h1>
+    <nav class="navbar navbar-dark bg-dark">
+  <!-- Navbar content --><a class="navbar-brand" href="#">DNS Lookup Tool</a>
+</nav>
+
+    <div class="container mt-5 ">
       <hr>
-      <form id="dnsCheck" action"/lookup">
-        <div class="form-group">
-          <label for="host">Host:</label>
-          <input type="text" class="form-control" id="host" placeholder="Enter host name">
+      <div class="row">
+        <div class="col-sm">
+          <form id="dnsCheck" action"/lookup">
+            <div class="form-group">
+              <label for="host">Host:</label>
+              <input type="text" class="form-control" id="host" placeholder="Enter host name">
+            </div>
+            <div class="form-group">
+              <label for="type">Type:</label>
+              <select class="form-control" id="type">
+                <option value="A">A</option>
+                <option value="AAAA">AAAA</option>
+                <option value="CNAME">CNAME</option>
+                <option value="MX">MX</option>
+                <option value="NS">NS</option>
+                <option value="TXT">TXT</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-dark btn-block btn-lg" id="lookupBtn">Lookup</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="type">Type:</label>
-          <select class="form-control" id="type">
-            <option value="A">A</option>
-            <option value="AAAA">AAAA</option>
-            <option value="CNAME">CNAME</option>
-            <option value="MX">MX</option>
-            <option value="NS">NS</option>
-            <option value="TXT">TXT</option>
-          </select>
+        <div class="col-sm">
+          <div class="card text-white bg-dark mb-3">
+            <div class="card-header">Result</div>
+            <div class="card-body">
+              <samp id="result">
+                <!-- Results will be inserted here -->
+              </samp>
+            </div>
+          </div>
         </div>
-        <button type="button" class="btn btn-primary" id="lookupBtn">Lookup</button>
-      </form>
-      <hr>
-      <div id="result">
-        <!-- Results will be inserted here -->
       </div>
+      <hr>
     </div>
 
     <!-- Load jQuery and Bootstrap JS from a CDN -->
