@@ -10,7 +10,7 @@
     <div class="container">
       <h1>DNS Lookup Tool</h1>
       <hr>
-      <form>
+      <form id="dnsCheck" action"/lookup">
         <div class="form-group">
           <label for="host">Host:</label>
           <input type="text" class="form-control" id="host" placeholder="Enter host name">
@@ -38,8 +38,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script>
-      $(document).ready(function() {
-        $('#lookupBtn').click(function() {
+      function doCheck() {
           var host = $('#host').val();
           var type = $('#type').val();
           $.ajax({
@@ -62,6 +61,15 @@
               $('#result').html('<p class="text-danger">' + error + '</p>');
             }
           });
+      }
+      $(document).ready(function() {
+        $('#lookupBtn').click(function() { doCheck(); });
+        $('#dnsCheck').on("submit", function(evt) {
+          //$('#lookupBtn').click(function() {
+          evt.preventDefault();
+
+          doCheck();
+
         });
       });
     </script>
