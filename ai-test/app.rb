@@ -12,8 +12,6 @@ post '/lookup' do
   records = Resolv::DNS.new.getresources(host, Resolv::DNS::Resource::IN.const_get(type))
   begin
     result = records.map do |r|
-      puts r.inspect
-      puts "TEST"
       case type 
       when "CNAME"
         r.name.to_s
