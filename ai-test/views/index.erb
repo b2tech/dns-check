@@ -19,17 +19,18 @@
             <div class="form-group">
               <label for="host">Host:</label>
               <input type="text" class="form-control" id="host" placeholder="Enter host name">
+              <small id="hostHelp" class="form-text text-muted">example.com (excluding protocol)</small>
             </div>
             <div class="form-group">
-              <label for="type">Type:</label>
-              <select class="form-control" id="type">
-                <option value="A">A</option>
-                <option value="AAAA">AAAA</option>
-                <option value="CNAME">CNAME</option>
-                <option value="MX">MX</option>
-                <option value="NS">NS</option>
-                <option value="TXT">TXT</option>
-              </select>
+              <label for="type">Type (all lookups performed):</label>
+              <span class="badge badge-secondary">NS</span>
+              <span class="badge badge-secondary">A</span>
+              <span class="badge badge-secondary">AAAA</span>
+              <span class="badge badge-secondary">CNAME</span>
+              <span class="badge badge-secondary">MX</span>
+              <span class="badge badge-secondary">TXT</span>
+              <span class="badge badge-secondary">Response code</span>
+
             </div>
             <button type="button" class="btn btn-dark btn-block btn-lg" id="lookupBtn">Lookup</button>
           </form>
@@ -52,6 +53,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script>
+      var r = "";
       function doCheck() {
           var host = $('#host').val();
           var type = $('#type').val();
@@ -61,10 +63,11 @@
             dataType: 'json',
             data: {host: host, type: type},
             success: function(result) {
+              r = result;
               if (result.status === 'success') {
                 var html = '';
-                for (var i = 0; i < result.result.length; i++) {
-                  html += '<p>' + result.result[i] + '</p>';
+                for (const [key, value] of Object.entries(result.result)) {
+                  html += '<p>' + key + ": " + value + '</p>';
                 }
                 $('#result').html(html);
               } else {
