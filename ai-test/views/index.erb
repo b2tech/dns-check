@@ -34,6 +34,7 @@
             </div>
             <button type="button" class="btn btn-dark btn-block btn-lg" id="lookupBtn">Lookup</button>
           </form>
+          
         </div>
         <div class="col-sm">
           <div class="card text-white bg-dark mb-3">
@@ -69,7 +70,9 @@
                 for (const [key, value] of Object.entries(result.result)) {
                   html += '<p>' + key + ": " + value + '</p>';
                 }
+                html += '<iframe src="https://' + host + '" />'
                 $('#result').html(html);
+
               } else {
                 $('#result').html('<p class="text-danger">' + result.message + '</p>');
               }
